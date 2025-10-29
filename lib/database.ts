@@ -10,7 +10,7 @@ const connectDB = async (): Promise<void> => {
     return;
   }
   // connect to db
-  const uri = process.env.DATABASE_URI;
+  const uri = process.env.MONGODB_URI;
   if (!uri) {
     throw new Error("DATABASE_URI is not defined in environment variables");
   }
