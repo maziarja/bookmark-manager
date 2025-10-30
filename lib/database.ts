@@ -16,7 +16,7 @@ const connectDB = async (): Promise<void> => {
   }
 
   try {
-    mongoose.connect(uri);
+    mongoose.connect(uri, { dbName: "bookmark-manager" });
     connected = true;
     console.log("MongoDB Connected Successfully");
   } catch (err) {
