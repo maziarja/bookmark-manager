@@ -1,6 +1,6 @@
 "use client";
 
-import { loginSchema, LoginType } from "@/app/types";
+import { loginSchema, LoginType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,9 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookmarkIcon, MailIcon } from "lucide-react";
+import { BookmarkIcon, LoaderCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
+import { redirect } from "next/navigation";
+import { credentialLogin } from "../_actions/credentialLogin";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 function LoginForm() {
   const form = useForm({
@@ -31,8 +34,14 @@ function LoginForm() {
     },
   });
 
-  function onSubmit(data: LoginType) {
-    console.log(data);
+  async function onSubmit(data: LoginType) {
+    const result = await credentialLogin(data);
+    if (result.success) redirect("/bookmarks");
+    if (!result.success) {
+      form.setError("root", {
+        message: result.message,
+      });
+    }
   }
 
   return (
@@ -95,9 +104,22 @@ function LoginForm() {
               </Field>
             )}
           />
+          {form.formState.errors.root && (
+            <p className="text-destructive text-sm">
+              {form.formState.errors.root.message}
+            </p>
+          )}
           <div className="flex-col flex items-center gap-3">
-            <Button type="submit" className="w-full">
-              Login
+            <Button
+              disabled={form.formState.isSubmitting}
+              type="submit"
+              className="w-full"
+            >
+              {form.formState.isSubmitting ? (
+                <LoaderCircleIcon className="animate-spin" />
+              ) : (
+                "Login"
+              )}
             </Button>
             <p className="text-sm text-card-foreground ">
               Don&#39;t have an account?{"  "}
@@ -113,10 +135,7 @@ function LoginForm() {
               <p className="text-center text-sm text-card-foreground">Or</p>
               <div className={cn("h-px w-full bg-muted")}></div>
             </div>
-            <Button type="button" variant="outline" className="w-full">
-              Login with Gmail
-              <MailIcon />
-            </Button>
+            <GoogleLoginButton />
           </div>
         </form>
       </CardContent>

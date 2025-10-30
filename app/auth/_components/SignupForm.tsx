@@ -1,6 +1,6 @@
 "use client";
 
-import { signupSchema, SignupType } from "@/app/types";
+import { signupSchema, SignupType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,9 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookmarkIcon, MailIcon } from "lucide-react";
+import { BookmarkIcon, LoaderCircleIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
+import { createUser } from "../_actions/createUser";
+import { redirect } from "next/navigation";
 
 function SignupForm() {
   const form = useForm({
@@ -32,8 +34,14 @@ function SignupForm() {
     },
   });
 
-  function onSubmit(data: SignupType) {
-    console.log(data);
+  async function onSubmit(data: SignupType) {
+    const result = await createUser(data);
+
+    if (result.success) redirect("/auth/login");
+
+    if (!result.success) {
+      form.setError("root", { message: result.message });
+    }
   }
 
   return (
@@ -117,9 +125,23 @@ function SignupForm() {
               </Field>
             )}
           />
+          {form.formState.errors.root && (
+            <p className="text-destructive text-sm">
+              {form.formState.errors.root.message}
+            </p>
+          )}
+
           <div className="flex flex-col gap-3 items-center">
-            <Button type="submit" className="w-full">
-              Create account
+            <Button
+              disabled={form.formState.isSubmitting}
+              type="submit"
+              className="w-full"
+            >
+              {form.formState.isSubmitting ? (
+                <LoaderCircleIcon className="animate-spin" />
+              ) : (
+                "Create account"
+              )}
             </Button>
             <p className="text-sm text-card-foreground ">
               Already have an account?{"  "}
