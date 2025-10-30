@@ -1,14 +1,18 @@
 import { auth } from "@/lib/auth";
-import LogoutBtn from "../auth/_components/LogoutBtn";
+import Nav from "./_components/Nav";
+import BookmarksContainer from "./_components/BookmarksContainer";
+import { getBookmarks } from "./_actions/getBookmarks";
 
 async function page() {
   const session = await auth();
   console.log(session);
+  const bookmarks = await getBookmarks();
+
   return (
-    <div>
-      this is bookmarks
-      <LogoutBtn />
-    </div>
+    <>
+      <Nav />
+      <BookmarksContainer bookmarks={bookmarks} />
+    </>
   );
 }
 

@@ -18,12 +18,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookmarkIcon, LoaderCircleIcon } from "lucide-react";
+import { LoaderCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
 import { credentialLogin } from "../_actions/credentialLogin";
 import GoogleLoginButton from "./GoogleLoginButton";
+import Logo from "@/app/bookmarks/_components/Logo";
 
 function LoginForm() {
   const form = useForm({
@@ -47,12 +48,7 @@ function LoginForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <div className="font-bold mb-4 flex gap-2 items-center">
-          <div className="bg-primary p-1.5 flex items-center justify-center rounded-xl">
-            <BookmarkIcon className="inline-block text-white" size={18} />
-          </div>
-          <p className="font-bold text-lg">Bookmark Manager</p>
-        </div>
+        <Logo />
         <CardTitle>Login to your account</CardTitle>
         <CardDescription>
           Welcome back! Please enter your details.
