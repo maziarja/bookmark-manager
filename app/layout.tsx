@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Bookmark Manager",
@@ -18,8 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`antialiased ${manrope.className}`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`antialiased ${manrope.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+        <Toaster closeButton position="top-right" duration={3000} />
+      </body>
     </html>
   );
 }

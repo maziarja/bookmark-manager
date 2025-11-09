@@ -16,7 +16,7 @@ export async function createInitialData(
         title: bookmark.title,
         url: bookmark.url,
         favicon: bookmark.favicon,
-        description: bookmark.favicon,
+        description: bookmark.description,
         tags: bookmark.tags,
         pinned: bookmark.pinned,
         isArchived: bookmark.isArchived,

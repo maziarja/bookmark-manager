@@ -39,5 +39,23 @@ export type BookmarksType = z.infer<typeof bookmarksSchema>;
 
 // ************* TAGS *************
 
-export const tagsSchema = z.array(z.string());
-export type TagsSchema = z.infer<typeof tagsSchema>;
+export const tagsSchema = z.array(
+  z.object({
+    count: z.number(),
+    name: z.string(),
+  })
+);
+export type TagsType = z.infer<typeof tagsSchema>;
+
+// ************* EDIT BOOKMARK *************
+
+export const addBookmarkSchema = z.object({
+  title: z.string().trim().min(1, "Can't be empty").max(100),
+  description: z.string().trim().min(1, "Can't be empty").max(280),
+  website: z.url("Invalid URL, must start with https://"),
+  tags: z
+    .string()
+    .regex(/^(\s*\w+\s*)(,\s*\w+\s*)*$/, "Must be comma-separated words"),
+});
+
+export type AddBookmarkType = z.infer<typeof addBookmarkSchema>;

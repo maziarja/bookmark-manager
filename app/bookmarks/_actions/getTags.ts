@@ -5,36 +5,31 @@ import { convertToObject } from "@/lib/convertToObject";
 import connectDB from "@/lib/database";
 import { tagsSchema } from "@/lib/types";
 import { Bookmark } from "@/models/Bookmark";
+import mongoose from "mongoose";
 
 export async function getTags() {
   try {
     await connectDB();
     const session = await auth();
 
-    const tagsDoc = await Bookmark.find({
-      userId: session?.user?.id,
-    }).select("tags");
+    const userId = new mongoose.Types.ObjectId(session?.user?.id);
+    const tagsDoc = await Bookmark.aggregate([
+      { $match: { userId } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $addFields: { name: "$_id" } },
+      { $project: { _id: 0, name: 1, count: 1 } },
+      { $sort: { name: 1 } },
+    ]);
 
-    const tagsArrayDoc = tagsDoc
-      .map((tag) => tag.tags)
-      .flat()
-      .sort();
-    const tagsArray = convertToObject(tagsArrayDoc);
-
+    const tagsArray = convertToObject(tagsDoc);
     const validTags = tagsSchema.safeParse(tagsArray);
     if (!validTags.success) {
       console.error(validTags.error.issues[0].code);
       return;
     }
-    const tagsObject = validTags.data.reduce((acc, item) => {
-      acc[item] = (acc[item] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
 
-    const formattedTagsArray = Object.keys(tagsObject).map((key, i) => {
-      return { [key]: Object.values(tagsObject)[i] };
-    });
-    return formattedTagsArray;
+    return validTags.data;
   } catch (error) {
     console.error(error);
   }

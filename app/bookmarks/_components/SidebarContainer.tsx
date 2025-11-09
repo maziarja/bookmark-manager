@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
 import Logo from "./Logo";
-import Sidebar from "./Sidebar";
+import SidebarContent from "./SidebarContent";
 import {
   Sheet,
   SheetContent,
@@ -10,11 +10,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-function SheetContainer() {
+type Props = {
+  isArchive: boolean;
+};
+
+async function SheetContainer({ isArchive }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={"outline"}>
+        <Button variant={"outline"} className="bg-card">
           <MenuIcon />
         </Button>
       </SheetTrigger>
@@ -23,7 +27,7 @@ function SheetContainer() {
           <SheetTitle>
             <Logo />
           </SheetTitle>
-          <Sidebar />
+          <SidebarContent isArchive={isArchive} />
         </SheetHeader>
       </SheetContent>
     </Sheet>

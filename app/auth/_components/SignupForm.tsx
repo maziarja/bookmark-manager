@@ -70,7 +70,7 @@ function SignupForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldContent>
-                  <FieldLabel htmlFor={field.name}>Full name</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Full name *</FieldLabel>
                   <Input
                     {...field}
                     id={field.name}
@@ -90,7 +90,7 @@ function SignupForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldContent>
-                  <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Email Address *</FieldLabel>
                   <Input
                     {...field}
                     id={field.name}
@@ -110,7 +110,7 @@ function SignupForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldContent>
-                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Password *</FieldLabel>
                   <Input
                     {...field}
                     type="password"

@@ -1,6 +1,5 @@
 "use client";
 
-import { CheckedState } from "@radix-ui/react-checkbox";
 import {
   createContext,
   Dispatch,
@@ -10,14 +9,14 @@ import {
 } from "react";
 
 type TagsContextType = {
-  tags: Record<string, CheckedState>[];
-  setTags: Dispatch<SetStateAction<Record<string, CheckedState>[]>>;
+  tags: string[];
+  setTags: Dispatch<SetStateAction<string[]>>;
 };
 
 const TagsContext = createContext<TagsContextType | undefined>(undefined);
 
 export function TagsProvider({ children }: { children: React.ReactNode }) {
-  const [tags, setTags] = useState<Record<string, CheckedState>[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   return (
     <TagsContext.Provider
