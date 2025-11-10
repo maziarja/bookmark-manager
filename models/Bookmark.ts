@@ -11,6 +11,7 @@ type BookmarkType = {
   isArchived: boolean;
   visitCount: number;
   lastVisited: Date;
+  _id: mongoose.Schema.Types.ObjectId;
 } & Document;
 
 const bookmarkSchema = new Schema<BookmarkType>(

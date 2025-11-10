@@ -28,7 +28,7 @@ import EditBookmarkButton from "./EditBookmarkButton";
 import ArchiveBookmark from "./ArchiveBookmarkButton";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import EditBookmarkModal from "./EditBookmarkModal";
-import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialog } from "@/components/ui/alert-dialog";
 import ArchiveBookmarkModal from "./ArchiveBookmarkModal";
 import DeleteBookmarkButton from "./DeleteBookmarkButton";
 import { useState } from "react";
@@ -40,6 +40,7 @@ type Props = {
 function BookmarkDetailsContainer({ bookmark }: Props) {
   const [openArchiveModal, setOpenArchiveModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   return (
     <Card>
       <CardHeader className="px-4 flex items-center gap-4">
@@ -47,7 +48,7 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
           {bookmark.favicon ? (
             <Image
               className="border rounded-xl"
-              src={bookmark.favicon?.slice(1)}
+              src={bookmark.favicon}
               width={44}
               height={44}
               alt="favicon"
@@ -61,8 +62,11 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
           <CardDescription>{bookmark.url.split("//")[1]}</CardDescription>
         </div>
         <CardAction className="ml-auto">
-          <Dialog>
-            <EditBookmarkModal bookmark={bookmark} />
+          <Dialog onOpenChange={setOpenEditModal} open={openEditModal}>
+            <EditBookmarkModal
+              bookmark={bookmark}
+              setOpenEditModal={setOpenEditModal}
+            />
             <AlertDialog
               onOpenChange={setOpenArchiveModal}
               open={openArchiveModal}
@@ -77,7 +81,7 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
               onOpenChange={setOpenDeleteModal}
               open={openDeleteModal}
             >
-              <DeleteBookmarkModal />
+              <DeleteBookmarkModal bookmarkId={bookmark._id} />
             </AlertDialog>
 
             <DropdownMenu>

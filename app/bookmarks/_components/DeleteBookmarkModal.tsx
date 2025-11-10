@@ -8,8 +8,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { deleteBookmark } from "../_actions/deleteBookmark";
 
-function DeleteBookmarkModal() {
+function DeleteBookmarkModal({ bookmarkId }: { bookmarkId: string }) {
+  async function handleClickDeleteBookmark() {
+    await deleteBookmark(bookmarkId);
+  }
+
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
@@ -21,7 +26,10 @@ function DeleteBookmarkModal() {
       <AlertDialogFooter>
         <AlertDialogCancel className="bg-card">Cancel</AlertDialogCancel>
         <AlertDialogAction asChild>
-          <Button className={buttonVariants({ variant: "destructive" })}>
+          <Button
+            onClick={handleClickDeleteBookmark}
+            className={buttonVariants({ variant: "destructive" })}
+          >
             Delete Permanently
           </Button>
         </AlertDialogAction>

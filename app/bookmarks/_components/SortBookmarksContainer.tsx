@@ -14,7 +14,11 @@ type Props = {
   sortBy: string;
 };
 
-function SortBookmarksContainer({ tags, isArchive, sortBy: sortedBy }: Props) {
+function SortBookmarksContainer({
+  tags,
+  isArchive,
+  sortBy: sortedBy = "recently-added",
+}: Props) {
   const sortBy = [
     {
       label: "Recently added",

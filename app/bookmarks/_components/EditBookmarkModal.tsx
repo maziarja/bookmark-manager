@@ -15,38 +15,78 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { addBookmarkSchema, AddBookmarkType, BookmarkType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { createBookmark } from "../_actions/createBookmark";
+import { updateBookmark } from "../_actions/updateBookmark";
 
 type Props = {
-  bookmark: BookmarkType;
+  bookmark?: BookmarkType;
+  mode?: "add" | "edit";
+  setOpenEditModal: Dispatch<SetStateAction<boolean>>;
 };
 
-function EditBookmarkModal({ bookmark }: Props) {
+function EditBookmarkModal({
+  bookmark,
+  mode = "edit",
+  setOpenEditModal,
+}: Props) {
   const textareaLimitSize = 280;
-
   const form = useForm({
     resolver: zodResolver(addBookmarkSchema),
     defaultValues: {
-      title: bookmark.title,
-      description: bookmark.description,
-      website: bookmark.url,
-      tags: bookmark.tags.join(", "),
+      title: bookmark?.title || "",
+      description: bookmark?.description || "",
+      website: bookmark?.url || "",
+      tags: bookmark?.tags.join(", ") || "",
     },
   });
 
-  function onSubmit(data: AddBookmarkType) {
-    console.log(data);
-    form.reset();
+  useEffect(() => {
+    if (bookmark) {
+      form.reset({
+        title: bookmark?.title || "",
+        description: bookmark?.description || "",
+        website: bookmark?.url || "",
+        tags: bookmark?.tags.join(", ") || "",
+      });
+    } else {
+      form.reset({
+        title: "",
+        description: "",
+        website: "",
+        tags: "",
+      });
+    }
+  }, [bookmark, form]);
+
+  async function onSubmit(data: AddBookmarkType) {
+    if (mode === "add") {
+      const result = await createBookmark(data);
+      if (result.success) {
+        form.reset();
+        setOpenEditModal(false);
+      }
+    }
+
+    if (mode === "edit") {
+      data.id = bookmark?._id;
+      const result = await updateBookmark(data);
+      if (result.success) {
+        form.reset();
+        setOpenEditModal(false);
+      }
+    }
   }
 
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Edit bookmark</DialogTitle>
+        <DialogTitle>{mode === "edit" ? "Edit" : "Add a"} bookmark</DialogTitle>
         <DialogDescription>
-          Update your saved link details — change the title, description, URL,
-          or tags anytime.
+          {mode === "edit"
+            ? "Update your saved link details — change the title, description, URL, or tags anytime."
+            : "Save a link with details to keep your collection organized. We extract the favicon automatically from the URL."}
         </DialogDescription>
       </DialogHeader>
 
@@ -57,13 +97,17 @@ function EditBookmarkModal({ bookmark }: Props) {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor={field.name}>{field.name} *</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                autoComplete="off"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <div className="space-y-1.5">
+                <Input
+                  {...field}
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </div>
             </Field>
           )}
         />
@@ -77,10 +121,9 @@ function EditBookmarkModal({ bookmark }: Props) {
             }
 
             return (
-              <Field data-invalid={fieldState.invalid} className="gap-0">
-                <FieldLabel htmlFor={field.name} className="mb-3">
-                  {field.name} *
-                </FieldLabel>
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>{field.name} *</FieldLabel>
+
                 <Textarea
                   {...field}
                   id={field.name}
@@ -88,14 +131,15 @@ function EditBookmarkModal({ bookmark }: Props) {
                   onChange={handleChangeTextarea}
                   value={field.value}
                   autoComplete="off"
-                  className="mb-1"
                 />
-                <span className="text-xs text-accent-foreground text-right">
-                  {field.value.length}/{textareaLimitSize}
-                </span>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
+                <div className="flex">
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                  <span className="text-xs ml-auto text-accent-foreground text-right">
+                    {field.value.length}/{textareaLimitSize}
+                  </span>
+                </div>
               </Field>
             );
           }}
@@ -106,13 +150,17 @@ function EditBookmarkModal({ bookmark }: Props) {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor={field.name}>{field.name} URL *</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                autoComplete="off"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <div className="space-y-1.5">
+                <Input
+                  {...field}
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </div>
             </Field>
           )}
         />
@@ -122,13 +170,18 @@ function EditBookmarkModal({ bookmark }: Props) {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor={field.name}>{field.name} *</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                aria-invalid={fieldState.invalid}
-                autoComplete="off"
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <div className="space-y-1.5">
+                <Input
+                  {...field}
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  autoComplete="off"
+                  placeholder="e.g. Design, Learning, Tools"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </div>
             </Field>
           )}
         />
@@ -144,7 +197,15 @@ function EditBookmarkModal({ bookmark }: Props) {
           </DialogClose>
 
           <Button type="submit" className="min-w-32.5">
-            {!form.formState.isSubmitting ? "Save Bookmark" : <Spinner />}
+            {!form.formState.isSubmitting ? (
+              mode === "edit" ? (
+                "Save Bookmark"
+              ) : (
+                "Add bookmark"
+              )
+            ) : (
+              <Spinner />
+            )}
           </Button>
         </DialogFooter>
       </form>

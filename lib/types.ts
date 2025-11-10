@@ -50,6 +50,7 @@ export type TagsType = z.infer<typeof tagsSchema>;
 // ************* EDIT BOOKMARK *************
 
 export const addBookmarkSchema = z.object({
+  id: z.string().optional(),
   title: z.string().trim().min(1, "Can't be empty").max(100),
   description: z.string().trim().min(1, "Can't be empty").max(280),
   website: z.url("Invalid URL, must start with https://"),

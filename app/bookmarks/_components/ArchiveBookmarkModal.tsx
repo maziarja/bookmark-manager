@@ -7,6 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { archiveBookmark } from "../_actions/archiveBookmark";
 
 type Props = {
   bookmarkId: string;
@@ -14,6 +15,11 @@ type Props = {
 };
 
 function ArchiveBookmarkModal({ bookmarkId, isArchived }: Props) {
+  async function handleClickArchive() {
+    const data = { bookmarkId, isArchived };
+    await archiveBookmark(data);
+  }
+
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
@@ -28,7 +34,7 @@ function ArchiveBookmarkModal({ bookmarkId, isArchived }: Props) {
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel className="bg-card">Cancel</AlertDialogCancel>
-        <AlertDialogAction>
+        <AlertDialogAction onClick={handleClickArchive}>
           {isArchived ? "Unarchive" : "Archive"}
         </AlertDialogAction>
       </AlertDialogFooter>
