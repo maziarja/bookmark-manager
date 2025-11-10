@@ -1,4 +1,6 @@
 import { PinIcon, PinOffIcon } from "lucide-react";
+import { togglePinBookmark } from "../_actions/togglePinBookmark";
+import { toast } from "sonner";
 
 type Props = {
   bookmarkId: string;
@@ -6,8 +8,19 @@ type Props = {
 };
 
 function UnpinBookmark({ bookmarkId, pinned }: Props) {
-  function handlePinBookmark() {
-    console.log(bookmarkId);
+  async function handlePinBookmark() {
+    const data = { pinned, bookmarkId };
+    const result = await togglePinBookmark(data);
+    if (result.success) {
+      toast(
+        <p className="text-sm font-medium">
+          Bookmark {pinned ? "unpinned." : "pinned to top."}
+        </p>,
+        {
+          icon: pinned ? <PinOffIcon size={20} /> : <PinIcon size={20} />,
+        }
+      );
+    }
   }
 
   return (

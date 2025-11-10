@@ -9,10 +9,18 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { deleteBookmark } from "../_actions/deleteBookmark";
+import { toast } from "sonner";
+import { Trash2Icon } from "lucide-react";
 
 function DeleteBookmarkModal({ bookmarkId }: { bookmarkId: string }) {
   async function handleClickDeleteBookmark() {
-    await deleteBookmark(bookmarkId);
+    const result = await deleteBookmark(bookmarkId);
+
+    if (result.success) {
+      toast(<p className="text-sm font-medium">Bookmark deleted.</p>, {
+        icon: <Trash2Icon size={20} />,
+      });
+    }
   }
 
   return (

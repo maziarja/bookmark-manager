@@ -7,10 +7,10 @@ import { revalidatePath } from "next/cache";
 
 type Data = {
   bookmarkId: string;
-  isArchived: boolean;
+  pinned: boolean;
 };
 
-export async function archiveBookmark(data: Data) {
+export async function togglePinBookmark(data: Data) {
   try {
     await connectDB();
     const session = await auth();
@@ -26,7 +26,7 @@ export async function archiveBookmark(data: Data) {
       throw new Error("You are not allow to update this bookmark");
 
     await Bookmark.findByIdAndUpdate(data.bookmarkId, {
-      isArchived: !data.isArchived,
+      pinned: !data.pinned,
     });
 
     revalidatePath("/bookmarks");

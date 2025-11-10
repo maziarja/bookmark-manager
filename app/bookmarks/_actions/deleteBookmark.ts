@@ -22,7 +22,9 @@ export async function deleteBookmark(bookmarkId: string) {
 
     await Bookmark.findByIdAndDelete(bookmarkId);
     revalidatePath("/bookmarks");
+    return { success: true };
   } catch (error) {
     console.error(error);
+    return { success: false };
   }
 }

@@ -10,37 +10,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { EllipsisVerticalIcon, GlobeIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  ClockIcon,
+  EyeIcon,
+  GlobeIcon,
+  PinIcon,
+} from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import VisitBookmark from "./VisitBookmark";
-import CopyUrlBookmark from "./CopyUrlBookmark";
-import UnpinBookmark from "./UnpinBookmark";
-import EditBookmarkButton from "./EditBookmarkButton";
-import ArchiveBookmark from "./ArchiveBookmarkButton";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import EditBookmarkModal from "./EditBookmarkModal";
-import { AlertDialog } from "@/components/ui/alert-dialog";
-import ArchiveBookmarkModal from "./ArchiveBookmarkModal";
-import DeleteBookmarkButton from "./DeleteBookmarkButton";
-import { useState } from "react";
-import DeleteBookmarkModal from "./DeleteBookmarkModal";
+import BookmarkActions from "./BookmarkActions";
+import { months } from "@/lib/consts";
 
 type Props = {
   bookmark: BookmarkType;
 };
 function BookmarkDetailsContainer({ bookmark }: Props) {
-  const [openArchiveModal, setOpenArchiveModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
   return (
     <Card>
       <CardHeader className="px-4 flex items-center gap-4">
@@ -57,89 +42,49 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
             <GlobeIcon size={44} className="border rounded-xl" />
           )}
         </>
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <CardTitle className="text-xl font-bold">{bookmark.title}</CardTitle>
           <CardDescription>{bookmark.url.split("//")[1]}</CardDescription>
         </div>
         <CardAction className="ml-auto">
-          <Dialog onOpenChange={setOpenEditModal} open={openEditModal}>
-            <EditBookmarkModal
-              bookmark={bookmark}
-              setOpenEditModal={setOpenEditModal}
-            />
-            <AlertDialog
-              onOpenChange={setOpenArchiveModal}
-              open={openArchiveModal}
-            >
-              <ArchiveBookmarkModal
-                bookmarkId={bookmark._id}
-                isArchived={bookmark.isArchived}
-              />
-            </AlertDialog>
-
-            <AlertDialog
-              onOpenChange={setOpenDeleteModal}
-              open={openDeleteModal}
-            >
-              <DeleteBookmarkModal bookmarkId={bookmark._id} />
-            </AlertDialog>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  size={"icon-lg"}
-                  className="bg-card rounded-xl"
-                >
-                  <EllipsisVerticalIcon />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <VisitBookmark url={bookmark.url} />
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <CopyUrlBookmark url={bookmark.url} />
-                  </DropdownMenuItem>
-                  {!bookmark.isArchived && (
-                    <DropdownMenuItem>
-                      <UnpinBookmark
-                        bookmarkId={bookmark._id}
-                        pinned={bookmark.pinned}
-                      />
-                    </DropdownMenuItem>
-                  )}
-                  {!bookmark.isArchived && (
-                    <DropdownMenuItem>
-                      <DialogTrigger className="w-full">
-                        <EditBookmarkButton />
-                      </DialogTrigger>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem onClick={() => setOpenArchiveModal(true)}>
-                    <ArchiveBookmark
-                      isArchive={bookmark.isArchived}
-                      bookmarkId={bookmark._id}
-                    />
-                  </DropdownMenuItem>
-                  {bookmark.isArchived && (
-                    <DropdownMenuItem onClick={() => setOpenDeleteModal(true)}>
-                      <DeleteBookmarkButton />
-                    </DropdownMenuItem>
-                  )}
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </Dialog>
+          <BookmarkActions bookmark={bookmark} />
         </CardAction>
       </CardHeader>
       <Separator className="max-w-[90%] mx-auto" />
-      <CardContent className="px-4">
-        <p>{bookmark.description}</p>
+      <CardContent className="px-4 gap-4 flex flex-col">
+        <p className="text-sm font-medium">{bookmark.description}</p>
+        <div className="flex items-center gap-2">
+          {bookmark.tags.map((tag) => (
+            <p
+              className="bg-accent px-2 py-0.5 rounded-lg text-xs font-medium"
+              key={tag}
+            >
+              {tag}
+            </p>
+          ))}
+        </div>
       </CardContent>
-      <CardFooter className="px-4">
-        <p>Card Footer</p>
+      <Separator />
+      <CardFooter className="px-4 text-xs font-medium gap-4">
+        <div className="flex items-center gap-1.5">
+          <EyeIcon size={12} />
+          {bookmark.visitCount}
+        </div>
+        {bookmark.lastVisited ? (
+          <div className="flex items-center gap-1.5">
+            <ClockIcon size={12} />
+            {new Date(bookmark?.lastVisited).getDate()}{" "}
+            {months[new Date(bookmark?.lastVisited).getMonth()]}
+          </div>
+        ) : null}
+        <div className="flex items-center gap-1.5">
+          <CalendarIcon size={12} />
+          {new Date(bookmark.createdAt).getDate()}{" "}
+          {months[new Date(bookmark.createdAt).getMonth()]}
+        </div>
+        {bookmark.pinned && (
+          <PinIcon size={16} className="stroke-foreground ml-auto" />
+        )}
       </CardFooter>
     </Card>
   );

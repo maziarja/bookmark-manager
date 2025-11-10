@@ -14,7 +14,7 @@ async function page({ searchParams }: Props) {
   const { archive: isArchive, search, sortBy } = await searchParams;
 
   const bookmarks = await getBookmarks(isArchive, sortBy);
-
+  bookmarks?.sort((a, b) => +b.pinned - +a.pinned);
   const filteredBookmarks = search
     ? bookmarks?.filter((bookmark) =>
         bookmark.title.toLowerCase().includes(search.trim().toLowerCase())

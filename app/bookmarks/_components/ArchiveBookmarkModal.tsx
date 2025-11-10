@@ -8,6 +8,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { archiveBookmark } from "../_actions/archiveBookmark";
+import { toast } from "sonner";
+import { ArchiveIcon, RotateCcwIcon } from "lucide-react";
 
 type Props = {
   bookmarkId: string;
@@ -17,7 +19,21 @@ type Props = {
 function ArchiveBookmarkModal({ bookmarkId, isArchived }: Props) {
   async function handleClickArchive() {
     const data = { bookmarkId, isArchived };
-    await archiveBookmark(data);
+    const result = await archiveBookmark(data);
+    if (result.success) {
+      toast(
+        <p className="text-sm font-medium">
+          Bookmark {isArchived ? "restored." : "archived."}
+        </p>,
+        {
+          icon: isArchived ? (
+            <RotateCcwIcon size={20} />
+          ) : (
+            <ArchiveIcon size={20} />
+          ),
+        }
+      );
+    }
   }
 
   return (

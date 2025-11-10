@@ -30,6 +30,7 @@ export const bookmarkSchema = z.object({
   isArchived: z.boolean(),
   visitCount: z.number(),
   lastVisited: z.string().nullable(),
+  createdAt: z.string(),
 });
 
 export const bookmarksSchema = z.array(bookmarkSchema);

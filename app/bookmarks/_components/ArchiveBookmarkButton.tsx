@@ -1,11 +1,10 @@
 import { ArchiveIcon, RotateCcwIcon } from "lucide-react";
 
 type Props = {
-  bookmarkId: string;
   isArchive: boolean;
 };
 
-function ArchiveBookmarkButton({ bookmarkId, isArchive }: Props) {
+function ArchiveBookmarkButton({ isArchive }: Props) {
   return (
     <div
       role="button"

@@ -19,6 +19,8 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { createBookmark } from "../_actions/createBookmark";
 import { updateBookmark } from "../_actions/updateBookmark";
+import { toast } from "sonner";
+import { CheckIcon } from "lucide-react";
 
 type Props = {
   bookmark?: BookmarkType;
@@ -66,6 +68,10 @@ function EditBookmarkModal({
       if (result.success) {
         form.reset();
         setOpenEditModal(false);
+        toast(
+          <p className="text-sm font-medium">Bookmark added successfully.</p>,
+          { icon: <CheckIcon size={20} /> }
+        );
       }
     }
 
@@ -75,6 +81,9 @@ function EditBookmarkModal({
       if (result.success) {
         form.reset();
         setOpenEditModal(false);
+        toast(<p className="text-sm font-medium">Changes saved.</p>, {
+          icon: <CheckIcon size={20} />,
+        });
       }
     }
   }

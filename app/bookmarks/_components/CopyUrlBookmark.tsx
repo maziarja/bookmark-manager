@@ -4,7 +4,7 @@ import { toast } from "sonner";
 function CopyUrlBookmark({ url }: { url: string }) {
   function handleCopyUrl() {
     navigator.clipboard.writeText(url);
-    toast("Link copied to clipboard.", {
+    toast(<p className="text-sm font-medium">Link copied to clipboard.</p>, {
       icon: <CopyIcon size={20} />,
     });
   }
