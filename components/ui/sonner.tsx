@@ -2,7 +2,6 @@
 
 import {
   CircleCheckIcon,
-  CopyIcon,
   InfoIcon,
   Loader2Icon,
   OctagonXIcon,
@@ -24,7 +23,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
         warning: <TriangleAlertIcon className="size-4" />,
         error: <OctagonXIcon className="size-4" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
-        copy: <CopyIcon className="size-4" />,
       }}
       style={
         {
