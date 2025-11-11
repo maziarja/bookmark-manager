@@ -3,6 +3,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { ThemedToaster } from "@/components/ui/ThemedToaster";
 
 export const metadata: Metadata = {
   title: "Bookmark Manager",
@@ -29,8 +30,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <ThemedToaster />
         </ThemeProvider>
-        <Toaster closeButton position="top-right" duration={3000} />
       </body>
     </html>
   );
