@@ -59,7 +59,7 @@ function BookmarkActions({ bookmark }: Props) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuGroup>
+          <DropdownMenuGroup className="space-y-1">
             <DropdownMenuItem>
               <VisitBookmark url={bookmark.url} bookmarkId={bookmark._id} />
             </DropdownMenuItem>

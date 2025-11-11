@@ -32,7 +32,7 @@ function TagsContainer({ tag }: { tag: TagsType[0] }) {
           {tag.name}
         </Label>
       </div>
-      <div className="text-[12px] font-medium text-foreground bg-muted border border-border rounded-full px-2 py-0.5">
+      <div className="text-[12px] font-medium text-foreground bg-accent border border-ring rounded-full px-2 py-0.5">
         {tag.count}
       </div>
     </li>
