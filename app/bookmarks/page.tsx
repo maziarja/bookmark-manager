@@ -1,6 +1,7 @@
 import Nav from "./_components/Nav";
 import BookmarksContainer from "./_components/BookmarksContainer";
 import { getBookmarks } from "./_actions/getBookmarks";
+import DesktopSidebar from "./_components/DesktopSidebar";
 
 type Props = {
   searchParams: Promise<{
@@ -22,15 +23,18 @@ async function page({ searchParams }: Props) {
     : bookmarks;
 
   return (
-    <>
-      <Nav isArchive={isArchive} />
-      <BookmarksContainer
-        bookmarks={filteredBookmarks}
-        isArchive={isArchive}
-        sortBy={sortBy}
-        searchQuery={search}
-      />
-    </>
+    <div className="lg:grid lg:grid-cols-[296px_1fr]">
+      <DesktopSidebar isArchive={isArchive} />
+      <div>
+        <Nav isArchive={isArchive} />
+        <BookmarksContainer
+          bookmarks={filteredBookmarks}
+          isArchive={isArchive}
+          sortBy={sortBy}
+          searchQuery={search}
+        />
+      </div>
+    </div>
   );
 }
 

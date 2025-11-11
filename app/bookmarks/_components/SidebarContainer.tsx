@@ -18,7 +18,7 @@ async function SheetContainer({ isArchive }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={"outline"} className="bg-card">
+        <Button variant={"outline"} className="bg-card lg:hidden">
           <MenuIcon />
         </Button>
       </SheetTrigger>

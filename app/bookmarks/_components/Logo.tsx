@@ -1,8 +1,8 @@
 import { BookmarkIcon } from "lucide-react";
 
-function Logo() {
+function Logo({ className }: { className?: string }) {
   return (
-    <div className="font-bold  flex gap-2 items-center">
+    <div className={`font-bold flex gap-2 items-center ${className}`}>
       <div className="bg-primary p-1.5 flex items-center justify-center rounded-xl">
         <BookmarkIcon className="inline-block text-white" size={18} />
       </div>

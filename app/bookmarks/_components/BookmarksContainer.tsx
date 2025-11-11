@@ -50,7 +50,7 @@ function BookmarksContainer({
       : bookmarks;
 
   return (
-    <div className="px-4">
+    <div className="px-4 md:px-8">
       <div ref={ref}>
         <SortBookmarksContainer
           tags={tags}
@@ -65,7 +65,7 @@ function BookmarksContainer({
           height: `calc(100dvh - ${sortBookmarkContainerHeight}px - ${navHeight}`,
         }}
       >
-        <div className="space-y-8 pb-4">
+        <div className="gap-8 grid pb-4 md:grid-cols-2 xl:grid-cols-3">
           {filteredBookmarks.map((bookmark) => (
             <BookmarkDetailsContainer key={bookmark._id} bookmark={bookmark} />
           ))}

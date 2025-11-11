@@ -17,16 +17,17 @@ function TagsContainer({ tag }: { tag: TagsType[0] }) {
     }
   }
   return (
-    <li className="flex items-center justify-between py-2">
-      <div className="flex items-center gap-2">
+    <li className="relative flex items-center justify-between py-2">
+      <div className="flex items-center gap-2 cursor-pointer ">
         <Checkbox
+          className="cursor-pointer "
           id={tag.name}
           checked={tags.includes(tag.name)}
           onCheckedChange={(check) => handleChangeTags(check, tag.name)}
         />
         <Label
           htmlFor={tag.name}
-          className="text-base font-semibold text-sidebar-foreground"
+          className="text-base cursor-pointer  font-semibold text-sidebar-foreground"
         >
           {tag.name}
         </Label>

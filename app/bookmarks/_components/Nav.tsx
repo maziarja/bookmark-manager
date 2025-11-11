@@ -9,8 +9,8 @@ type Props = {
 
 function Nav({ isArchive }: Props) {
   return (
-    <nav className="px-4 py-3 bg-card flex gap-2.5 items-center justify-between">
-      <div className="flex items-center gap-4">
+    <nav className="px-4 py-3 md:px-8 md:py-4 bg-card flex gap-2.5 items-center justify-between">
+      <div className="flex items-center gap-4 grow">
         <SidebarContainer isArchive={isArchive} />
         <SearchInput />
       </div>

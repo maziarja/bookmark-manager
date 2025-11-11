@@ -16,6 +16,7 @@ function AddBookmarkButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusIcon />
+          <p className="hidden md:block">Add Bookmark</p>
         </Button>
       </DialogTrigger>
     </Dialog>

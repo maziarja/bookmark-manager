@@ -46,10 +46,12 @@ function LoginForm() {
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md gap-8">
       <CardHeader>
-        <Logo />
-        <CardTitle>Login to your account</CardTitle>
+        <Logo className="mb-8" />
+        <CardTitle className="text-2xl font-bold">
+          Login to your account
+        </CardTitle>
         <CardDescription>
           Welcome back! Please enter your details.
         </CardDescription>
@@ -105,7 +107,7 @@ function LoginForm() {
               {form.formState.errors.root.message}
             </p>
           )}
-          <div className="flex-col flex items-center gap-3">
+          <div className="flex-col flex items-center gap-4">
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"
@@ -114,7 +116,7 @@ function LoginForm() {
               {form.formState.isSubmitting ? (
                 <LoaderCircleIcon className="animate-spin" />
               ) : (
-                "Login"
+                "Log in"
               )}
             </Button>
             <p className="text-sm text-card-foreground ">

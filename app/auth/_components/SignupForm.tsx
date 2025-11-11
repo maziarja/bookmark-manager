@@ -18,11 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookmarkIcon, LoaderCircleIcon, MailIcon } from "lucide-react";
+import { LoaderCircleIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { createUser } from "../_actions/createUser";
 import { redirect } from "next/navigation";
+import Logo from "@/app/bookmarks/_components/Logo";
 
 function SignupForm() {
   const form = useForm({
@@ -47,13 +48,10 @@ function SignupForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <div className="font-bold mb-4 flex gap-2 items-center">
-          <div className="bg-primary p-1.5 flex items-center justify-center rounded-xl">
-            <BookmarkIcon className="inline-block text-white" size={18} />
-          </div>
-          <p className="font-bold text-lg">Bookmark Manager</p>
-        </div>
-        <CardTitle>Create your account</CardTitle>
+        <Logo className="mb-8" />
+        <CardTitle className="text-2xl font-bold">
+          Create your account
+        </CardTitle>
         <CardDescription>
           Join us and start saving your favorite links — organized, searchable,
           and always within reach.
@@ -131,7 +129,7 @@ function SignupForm() {
             </p>
           )}
 
-          <div className="flex flex-col gap-3 items-center">
+          <div className="flex flex-col gap-4 items-center">
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"

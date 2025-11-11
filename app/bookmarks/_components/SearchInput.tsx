@@ -29,7 +29,7 @@ function SearchInput() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative grow max-w-xs">
       <SearchIcon
         className="absolute top-3 left-2 stroke-muted-foreground"
         size={20}

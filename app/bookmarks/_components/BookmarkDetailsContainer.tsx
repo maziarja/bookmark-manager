@@ -64,7 +64,7 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
           ))}
         </div>
       </CardContent>
-      <Separator />
+      <Separator className="mt-auto" />
       <CardFooter className="px-4 text-xs font-medium gap-4">
         <div className="flex items-center gap-1.5">
           <EyeIcon size={12} />

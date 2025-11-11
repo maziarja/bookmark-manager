@@ -3,6 +3,7 @@ import { getTags } from "../_actions/getTags";
 import TagsContainer from "./TagsContainer";
 import { SheetClose, SheetDescription } from "@/components/ui/sheet";
 import Link from "next/link";
+import ResetTags from "./ResetTags";
 
 type Props = {
   isArchive: boolean;
@@ -59,8 +60,9 @@ async function Sidebar({ isArchive }: Props) {
           </Link>
         </SheetClose>
       </div>
-      <SheetDescription className="text-xs font-bold mb-1 px-3">
+      <SheetDescription className="text-xs flex items-center font-bold mb-2 px-3">
         TAGS
+        <ResetTags />
       </SheetDescription>
       <ul className="flex flex-col px-3">
         {tags?.map((tag, i) => (
