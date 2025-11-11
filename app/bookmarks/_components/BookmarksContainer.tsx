@@ -11,9 +11,15 @@ type PropsType = {
   bookmarks: BookmarksType | undefined;
   isArchive: boolean;
   sortBy: string;
+  searchQuery: string;
 };
 
-function BookmarksContainer({ bookmarks, isArchive, sortBy }: PropsType) {
+function BookmarksContainer({
+  bookmarks,
+  isArchive,
+  sortBy,
+  searchQuery,
+}: PropsType) {
   const { tags } = useTags();
   const [sortBookmarkContainerHeight, setSortBookmarkContainerHeight] =
     useState(0);
@@ -50,6 +56,7 @@ function BookmarksContainer({ bookmarks, isArchive, sortBy }: PropsType) {
           tags={tags}
           isArchive={isArchive}
           sortBy={sortBy}
+          searchQuery={searchQuery}
         />
       </div>
 

@@ -31,7 +31,7 @@ function SearchInput() {
   return (
     <div className="relative">
       <SearchIcon
-        className="absolute top-2 left-2 stroke-muted-foreground"
+        className="absolute top-3 left-2 stroke-muted-foreground"
         size={20}
       />
       <Input

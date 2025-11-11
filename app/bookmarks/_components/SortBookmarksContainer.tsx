@@ -12,12 +12,14 @@ type Props = {
   tags: string[];
   isArchive: boolean;
   sortBy: string;
+  searchQuery: string;
 };
 
 function SortBookmarksContainer({
   tags,
   isArchive,
   sortBy: sortedBy = "recently-added",
+  searchQuery,
 }: Props) {
   const sortBy = [
     {
@@ -45,13 +47,21 @@ function SortBookmarksContainer({
 
   return (
     <div className="pt-6 pb-5 flex justify-between items-center gap-6">
-      <p className="text-xl font-bold">
-        {tags.length === 0
-          ? isArchive
-            ? "Archived bookmarks"
-            : "All bookmarks"
-          : `Bookmarks tagged: ${tags.join(", ")}`}
-      </p>
+      {!searchQuery && (
+        <p className="text-xl font-bold">
+          {tags.length === 0
+            ? isArchive
+              ? "Archived bookmarks"
+              : "All bookmarks"
+            : `Bookmarks tagged: ${tags.join(", ")}`}
+        </p>
+      )}
+      {searchQuery && (
+        <p className="text-xl font-bold break-all">
+          Results for:{" "}
+          <span className="text-primary">&#34;{searchQuery}&#34;</span>
+        </p>
+      )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

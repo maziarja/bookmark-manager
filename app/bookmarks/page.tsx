@@ -28,6 +28,7 @@ async function page({ searchParams }: Props) {
         bookmarks={filteredBookmarks}
         isArchive={isArchive}
         sortBy={sortBy}
+        searchQuery={search}
       />
     </>
   );

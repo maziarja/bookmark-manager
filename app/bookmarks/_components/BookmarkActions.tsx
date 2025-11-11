@@ -61,7 +61,7 @@ function BookmarkActions({ bookmark }: Props) {
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <VisitBookmark url={bookmark.url} />
+              <VisitBookmark url={bookmark.url} bookmarkId={bookmark._id} />
             </DropdownMenuItem>
             <DropdownMenuItem>
               <CopyUrlBookmark url={bookmark.url} />

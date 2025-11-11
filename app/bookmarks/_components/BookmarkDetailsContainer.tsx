@@ -82,8 +82,13 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
           {new Date(bookmark.createdAt).getDate()}{" "}
           {months[new Date(bookmark.createdAt).getMonth()]}
         </div>
-        {bookmark.pinned && (
+        {bookmark.pinned && !bookmark.isArchived && (
           <PinIcon size={16} className="stroke-foreground ml-auto" />
+        )}
+        {bookmark.isArchived && (
+          <p className="bg-accent ml-auto px-2 py-0.5 rounded-lg text-xs font-medium">
+            Archive
+          </p>
         )}
       </CardFooter>
     </Card>
