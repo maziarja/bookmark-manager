@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import connectDB from "@/lib/database";
 import { Bookmark } from "@/models/Bookmark";
+import { revalidatePath } from "next/cache";
 
 export async function visitBookmark(bookmarkId: string) {
   try {
@@ -25,6 +26,8 @@ export async function visitBookmark(bookmarkId: string) {
       bookmark.visitCount = bookmark?.visitCount + 1;
       await bookmark.save();
     }
+
+    revalidatePath("/bookmarks");
   } catch (error) {
     console.error(error);
   }
