@@ -25,10 +25,12 @@ export async function visitBookmark(bookmarkId: string) {
       bookmark.lastVisited = new Date();
       bookmark.visitCount = bookmark?.visitCount + 1;
       await bookmark.save();
+      return { success: true };
     }
 
     revalidatePath("/bookmarks");
   } catch (error) {
     console.error(error);
+    return { success: false };
   }
 }

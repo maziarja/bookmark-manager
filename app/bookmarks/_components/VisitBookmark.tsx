@@ -9,8 +9,12 @@ function VisitBookmark({
   bookmarkId: string;
 }) {
   async function handleClickVisit() {
-    await visitBookmark(bookmarkId);
-    window.location.href = url;
+    try {
+      const result = await visitBookmark(bookmarkId);
+      if (result?.success) window.location.href = url;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
