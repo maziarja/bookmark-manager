@@ -33,14 +33,14 @@ function SortBookmarksContainer({
       label: "Recently visited",
       value: "recently-visited",
       href: isArchive
-        ? "/bookmarks?archive=true&sortBy=recently-added"
+        ? "/bookmarks?archive=true&sortBy=recently-visited"
         : "/bookmarks?sortBy=recently-visited",
     },
     {
       label: `Most visited`,
       value: "most-visited",
       href: isArchive
-        ? "/bookmarks?archive=true&sortBy=recently-added"
+        ? "/bookmarks?archive=true&sortBy=most-visited"
         : "/bookmarks?sortBy=most-visited",
     },
   ];
@@ -59,7 +59,7 @@ function SortBookmarksContainer({
       {searchQuery && (
         <p className="text-xl font-bold break-all">
           Results for:{" "}
-          <span className="text-primary">&#34;{searchQuery}&#34;</span>
+          <span className="text-muted-foreground">&#34;{searchQuery}&#34;</span>
         </p>
       )}
       <DropdownMenu>
