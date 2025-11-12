@@ -51,9 +51,9 @@ function BookmarkDetailsContainer({ bookmark }: Props) {
         </CardAction>
       </CardHeader>
       <Separator className="max-w-[90%] mx-auto" />
-      <CardContent className="px-4 gap-4 flex flex-col">
+      <CardContent className="px-4 gap-4 flex flex-col  h-full">
         <p className="text-sm font-medium">{bookmark.description}</p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mt-auto">
           {bookmark.tags.map((tag) => (
             <p
               className="bg-accent px-2 py-0.5 rounded-lg text-xs font-medium"
