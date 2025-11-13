@@ -17,10 +17,10 @@ function TagsContainer({ tag }: { tag: TagsType[0] }) {
     }
   }
   return (
-    <li className="relative flex items-center justify-between py-2">
-      <div className="flex items-center gap-2 cursor-pointer ">
+    <li className="relative flex items-center justify-between py-2.5">
+      <div className="flex items-center  gap-2 cursor-pointer">
         <Checkbox
-          className="cursor-pointer "
+          className="cursor-pointer"
           id={tag.name}
           checked={tags.includes(tag.name)}
           onCheckedChange={(check) => handleChangeTags(check, tag.name)}
