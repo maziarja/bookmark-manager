@@ -62,7 +62,7 @@ async function DesktopSidebar({ isArchive }: { isArchive: boolean }) {
           <p>TAGS</p>
           <ResetTags />
         </div>
-        <ul className="flex flex-col px-3">
+        <ul className="flex flex-col px-3 overflow-y-scroll h-[calc(100dvh-250px)]">
           {tags?.map((tag, i) => (
             <TagsContainer key={i} tag={tag} />
           ))}
